@@ -6,7 +6,7 @@
 <title>Арине 18 · 8 ноября</title>
 <meta name="description" content="Приглашение на восемнадцатилетие Арины: 8 ноября собираемся в 12:00 у ТЦ «Шайба» и идём на Кибер Арену.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#1B092F">
+<meta name="theme-color" content="#241143">
 <meta property="og:title" content="Арине 18. Квест 8 ноября">
 <meta property="og:description" content="Вскрой конверт: квест 8 ноября — сбор в 12:00, Кибер Арена в 13:00, кафе и игры в 16:30.">
 <meta property="og:image" content="https://artemkaaaaa3-sketch.github.io/arina-18/img/og.png">
@@ -17,13 +17,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&family=Fira+Code:wght@600&family=Onest:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handjet:wght@700&family=Fira+Code:wght@600&family=Onest:wght@400;700&display=swap">
 
 <style>
 :root{
-  --night:#1B092F;
-  --panel:#241245;
-  --line:#44307C;
+  --night:#241143;
+  --panel:#2E1955;
+  --line:#523A94;
   --amethyst:#A78BFF;
   --violet:#6D4AE0;
   --gold:#FFC957;
@@ -114,7 +114,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 /* ── конверт-оверлей ── */
 .envelope-screen{
   position:fixed;inset:0;z-index:80;background:
-    radial-gradient(90% 70% at 50% 20%, #2A1554 0%, var(--night) 68%);
+    radial-gradient(90% 70% at 50% 20%, #331B66 0%, var(--night) 68%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:38px;padding:24px;text-align:center;
 }
@@ -192,6 +192,11 @@ h2 em{font-style:normal;color:var(--amethyst)}
   filter:drop-shadow(0 5px 7px rgba(0,0,0,.4));
 }
 .env-seal text{font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:44px}
+/* на узком конверте печать 104px наезжала на строку «кому: тебе» */
+@media (max-width:380px){
+  .env-seal{width:84px}
+  .env-glow{width:150px;height:96px}
+}
 
 /* ── герой ── */
 .hero{
@@ -249,7 +254,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 
 /* ── отсчёт ── */
 .term{overflow:hidden}
-.term-bar{display:flex;gap:8px;margin:-28px -28px 22px;padding:12px 16px;align-items:center;background:#1F0E3E}
+.term-bar{display:flex;gap:8px;margin:-28px -28px 22px;padding:12px 16px;align-items:center;background:#291549}
 .term-bar i{width:10px;height:10px;background:var(--line)}
 .term-bar i:first-child{background:var(--amethyst)}
 .term-bar span{margin-left:14px;font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
@@ -266,6 +271,13 @@ h2 em{font-style:normal;color:var(--amethyst)}
 }
 .colon{font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:40px;color:var(--line);transform:translateY(-6px)}
 .count-done{text-align:center;font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:40px;color:var(--gold)}
+@media (max-width:374px){.count{gap:8px}}
+/* на 320 ряд шире слаба: term{overflow:hidden} молча резал крайние цифры */
+@media (max-width:355px){
+  .count{gap:6px}
+  .colon{display:none}
+  .cell b{font-size:48px}
+}
 .loadbar{margin:24px auto 0;max-width:420px;height:10px;border:2px solid var(--line);position:relative;overflow:hidden}
 .loadbar i{position:absolute;inset:0;transform-origin:left;background:linear-gradient(90deg,var(--violet),var(--amethyst));}
 
@@ -292,6 +304,8 @@ h2 em{font-style:normal;color:var(--amethyst)}
   font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;
   letter-spacing:.04em;color:var(--dim);
 }
+/* нажимаемое — шрифтом текста, по правилу ролей */
+.level .addr a{font-family:"Onest","Onest FB","Segoe UI",system-ui,sans-serif;font-weight:700;letter-spacing:normal}
 .level p{color:var(--dim);margin-top:8px;font-size:17px}
 .level .tag{
   display:inline-block;margin-top:12px;font-family:"Fira Code","Fira FB",monospace;font-weight:600;
@@ -387,7 +401,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .loot-card i{font-style:normal;font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;color:var(--dim)}
 .loot-n{
   position:absolute;top:10px;right:12px;
-  font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:26px;line-height:1;color:#8F7BDA;
+  font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:26px;line-height:1;color:#9C8AE0;
 }
 .loot-state{
   margin-top:auto;align-self:flex-start;
@@ -399,7 +413,12 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .loot-note{margin-top:22px;color:var(--dim)}
 @media (max-width:560px){
   .loot{grid-template-columns:1fr 1fr;gap:14px}
-  .loot-card{padding:14px 12px 12px}
+  .loot-card{padding:14px 12px 12px;min-width:0}
+  .loot-card b{hyphens:auto}
+}
+/* на самых узких экранах два столбца не помещаются даже с переносами */
+@media (max-width:359px){
+  .loot{grid-template-columns:1fr}
 }
 
 /* ── скриншоты дня ── */
@@ -549,7 +568,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         <div>
           <time>12:00</time>
           <h3>Сбор у ТЦ «Шайба»</h3>
-          <span class="addr">ул. Яна Фабрициуса, 5В · главный вход</span>
+          <span class="addr">ул. Яна Фабрициуса, 5В · главный вход · <a href="https://yandex.ru/maps/?text=Псков, Яна Фабрициуса 5В" target="_blank" rel="noopener">на карте</a></span>
           <p>Собираемся, считаем всех по головам — и стартуем вместе.</p>
         </div>
       </div>
@@ -559,7 +578,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         <div>
           <time>13:00</time>
           <h3>Кибер Арена</h3>
-          <span class="addr">Рижский проспект, 70 · цокольный этаж</span>
+          <span class="addr">Рижский проспект, 70 · цокольный этаж · <a href="https://yandex.ru/maps/?text=Псков, Рижский проспект 70" target="_blank" rel="noopener">на карте</a></span>
           <p>Главная локация дня — играем на больших экранах в командные катки с криками «за что!», а новичкам объясняем кнопки.</p>
           <span class="tag">точка дня</span>
         </div>
@@ -600,7 +619,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       <div class="quiz-progress" id="qProgress" aria-hidden="true"></div>
       <div class="quiz-stage" id="qStage" aria-live="polite">
         <div class="q-card" id="qIntro">
-          <p class="q-text">Готов проверить дружбу?</p>
+          <p class="q-text">Проверим дружбу?</p>
           <p style="color:var(--dim);margin-inline:auto">За верный ответ прилетают звезда и конфетти, а за промах — честная история, как всё было на самом деле. Переиграть можно сколько угодно.</p>
           <button class="btn btn-main q-next" id="qStart" type="button">Начать игру</button>
         </div>
@@ -667,7 +686,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         <span class="loot-state">свободен</span>
       </div>
     </div>
-    <p class="loot-note">Чтобы подарок не задвоился: выбрал — <a href="https://t.me/kyun_star_11" target="_blank" rel="noopener">напиши Арине</a> «беру №…», и мы пометим его занятым.</p>
+    <p class="loot-note">Чтобы подарок не задвоился, <a href="https://t.me/kyun_star_11" target="_blank" rel="noopener">напиши Арине</a> «беру №…» — и мы пометим его занятым в списке.</p>
   </div>
 </section>
 
@@ -700,7 +719,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       <button class="btn btn-main" id="yes" type="button">Погнали!</button>
       <button class="btn" id="no" type="button">Не смогу</button>
     </div>
-    <div class="answer">
+    <div class="answer" aria-live="polite">
       <div id="aYes" class="hidden">
         <span class="pix">Ура, ждём тебя!</span>
         <span class="ans-note">Чтобы ответ засчитался, черкни Арине в личку.</span>
@@ -908,9 +927,8 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   var timer = setInterval(tick, 1000);
 
   /* ── викторина ──
-     ВОПРОСЫ-ЗАГЛУШКИ: заменить на настоящие от Арины (текст, варианты,
-     индекс правильного ok и предыстория why). Вопрос про цвет — настоящий:
-     фиолетовый Арина выбрала сама. Механика готова. */
+     Вопросы, варианты и истории why — дословно от Арины (28.09.2026).
+     Тексты не переписывать, чинить можно только явные опечатки набора. */
   var QUIZ = [
     { q: "Мои любимые цветы",
       a: ["Розы", "Пионы", "Лилии"], ok: 2,
