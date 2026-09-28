@@ -410,11 +410,25 @@ h2 em{font-style:normal;color:var(--amethyst)}
 }
 .loot-card[data-taken]{opacity:.55}
 .loot-card[data-taken] .loot-state{color:var(--dim);border-color:var(--line)}
+.loot-book{
+  position:relative;z-index:1;
+  margin-top:10px;width:100%;font-weight:700;font-size:17px;color:#fff;
+  background:#5B39CC;border:2px solid #5B39CC;padding:11px 12px;cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.loot-book:hover{background:#6A47E0;border-color:#6A47E0}
+.loot-book.armed{background:var(--gold);border-color:var(--gold);color:#241143}
+.loot-book.mine{background:transparent;border-color:var(--line);color:var(--dim)}
+.loot-book.mine:hover{border-color:var(--amethyst);color:var(--amethyst)}
+.loot-state.st-taken{color:var(--dim);border-color:var(--line)}
+.loot-state.st-mine{color:var(--gold);border-color:rgba(255,201,87,.45)}
 .loot-note{margin-top:22px;color:var(--dim)}
 @media (max-width:560px){
   .loot{grid-template-columns:1fr 1fr;gap:14px}
   .loot-card{padding:14px 12px 12px;min-width:0}
   .loot-card b{hyphens:auto}
+  .loot-book{font-size:14px;padding:11px 6px}
+  .loot-note{hyphens:auto}
 }
 /* на самых узких экранах два столбца не помещаются даже с переносами */
 @media (max-width:359px){
@@ -637,56 +651,56 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       <p>Формат и стоимость не важны — главное, чтобы к основной части подарка прилагалась маленькая деталь, которая напоминает об имениннице именно тебе: брелок, рисунок, что угодно.</p>
     </div>
     <div class="loot">
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g1">
         <span class="loot-n" aria-hidden="true">01</span>
         <b><a href="https://ozon.ru/t/NsU630F" target="_blank" rel="noopener">Футболка Uniqlo</a></b>
         <i>размер L · Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g2">
         <span class="loot-n" aria-hidden="true">02</span>
         <b><a href="https://ozon.ru/t/UuoxY3H" target="_blank" rel="noopener">Набор масляных духов</a></b>
         <i>пробники, 100 мл · Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g3">
         <span class="loot-n" aria-hidden="true">03</span>
         <b><a href="https://ozon.ru/t/pHd1n2U" target="_blank" rel="noopener">Сумка кросс-боди YUWISS</a></b>
         <i>Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g4">
         <span class="loot-n" aria-hidden="true">04</span>
         <b><a href="https://www.wildberries.ru/catalog/439234995/detail.aspx?size=622621730" target="_blank" rel="noopener">Синельная проволока</a></b>
         <i>набор для творчества · WB</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g5">
         <span class="loot-n" aria-hidden="true">05</span>
         <b><a href="https://www.wildberries.ru/catalog/377456075/detail.aspx?size=549858811" target="_blank" rel="noopener">Сумка через плечо Spens</a></b>
         <i>WB</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g6">
         <span class="loot-n" aria-hidden="true">06</span>
         <b><a href="https://www.wildberries.ru/catalog/298085407/detail.aspx?size=453300603" target="_blank" rel="noopener">Острые соевые снеки</a></b>
         <i>10 пачек барбекю · WB</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g7">
         <span class="loot-n" aria-hidden="true">07</span>
         <b><a href="https://www.wildberries.ru/catalog/137214434/detail.aspx?size=233749095" target="_blank" rel="noopener">Вечерний корсет</a></b>
         <i>WB</i>
         <span class="loot-state">свободен</span>
       </div>
-      <div class="loot-card">
+      <div class="loot-card" data-gift="g8">
         <span class="loot-n" aria-hidden="true">08</span>
         <b><a href="https://ozon.ru/t/9o2mBel" target="_blank" rel="noopener">Сумка кросс-боди</a></b>
         <i>Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
     </div>
-    <p class="loot-note">Чтобы подарок не задвоился, <a href="https://t.me/kyun_star_11" target="_blank" rel="noopener">напиши Арине</a> «беру №…» — и мы пометим его занятым в списке.</p>
+    <p class="loot-note" id="bookNote">Бронь анонимная: нажал — и остальные сразу видят, что подарок занят. Передумаешь — кнопка «Снять бронь» останется на твоей карточке в этом браузере.</p>
   </div>
 </section>
 
@@ -1115,6 +1129,169 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     aYes.classList.add("hidden"); aNo.classList.remove("hidden");
     yes.textContent = "Погнали!";
   });
+
+  /* ── живая бронь вишлиста: Firebase RTDB, анонимно ── */
+  (function booking(){
+    var DB = "https://arina18-default-rtdb.europe-west1.firebasedatabase.app";
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".loot-card[data-gift]"));
+    if (!cards.length || !window.fetch) return;
+    var note = document.getElementById("bookNote");
+    var noteDefault = note ? note.innerHTML : "";
+    var offline = false;
+
+    function tokenKey(id){ return "arina-gift-" + id; }
+    function myToken(id){
+      try { return localStorage.getItem(tokenKey(id)); } catch(e){ return null; }
+    }
+    function makeToken(){
+      var s = "";
+      try {
+        var a = new Uint8Array(16);
+        crypto.getRandomValues(a);
+        a.forEach(function(b){ s += (b < 16 ? "0" : "") + b.toString(16); });
+      } catch(e){
+        while (s.length < 32) s += Math.random().toString(16).slice(2);
+        s = s.slice(0, 32);
+      }
+      return s;
+    }
+
+    cards.forEach(function(card){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "loot-book";
+      b.hidden = true;
+      card.appendChild(b);
+      b.addEventListener("click", function(){ onClick(card, b); });
+    });
+
+    function setOffline(on){
+      if (on === offline) return;
+      offline = on;
+      if (!note) return;
+      if (on){
+        note.innerHTML = "Онлайн-бронь сейчас недоступна. Чтобы подарок закрепили за тобой, " +
+          "<a href=\"https://t.me/kyun_star_11\" target=\"_blank\" rel=\"noopener\">напиши Арине</a>.";
+      } else {
+        note.innerHTML = noteDefault;
+      }
+    }
+
+    function apply(data){
+      cards.forEach(function(card){
+        var id = card.getAttribute("data-gift");
+        var btn = card.querySelector(".loot-book");
+        var st = card.querySelector(".loot-state");
+        var taken = !!(data && data[id]);
+        var mine = taken && !!myToken(id);
+        btn.classList.remove("armed");
+        if (offline){
+          btn.hidden = true;
+          card.removeAttribute("data-taken");
+          if (st){ st.textContent = "свободен"; st.className = "loot-state"; }
+          return;
+        }
+        if (!taken){
+          card.removeAttribute("data-taken");
+          if (st){ st.textContent = "свободен"; st.className = "loot-state"; }
+          btn.hidden = false;
+          btn.classList.remove("mine");
+          btn.textContent = "Забронировать";
+        } else if (mine){
+          card.removeAttribute("data-taken");
+          if (st){ st.textContent = "твоя бронь"; st.className = "loot-state st-mine"; }
+          btn.hidden = false;
+          btn.classList.add("mine");
+          btn.textContent = "Снять бронь";
+        } else {
+          card.setAttribute("data-taken", "");
+          if (st){ st.textContent = "занят"; st.className = "loot-state st-taken"; }
+          btn.hidden = true;
+        }
+      });
+    }
+
+    var last = null;
+    function refresh(){
+      return fetch(DB + "/taken.json", { cache: "no-store" })
+        .then(function(r){ if (!r.ok) throw 0; return r.json(); })
+        .then(function(d){ setOffline(false); last = d || {}; apply(last); })
+        .catch(function(){ setOffline(true); apply(last || {}); });
+    }
+
+    function onClick(card, btn){
+      var id = card.getAttribute("data-gift");
+      if (btn.classList.contains("mine")){
+        if (!btn.classList.contains("armed")){
+          arm(btn, "Точно снять бронь?");
+          return;
+        }
+        disarm(btn);
+        cancelBooking(id, btn);
+      } else {
+        if (!btn.classList.contains("armed")){
+          arm(btn, "Точно бронируем?");
+          return;
+        }
+        disarm(btn);
+        book(id, btn);
+      }
+    }
+    var armTimer = 0;
+    function arm(btn, text){
+      btn.dataset.label = btn.textContent;
+      btn.textContent = text;
+      btn.classList.add("armed");
+      clearTimeout(armTimer);
+      armTimer = setTimeout(function(){ disarm(btn); }, 4000);
+    }
+    function disarm(btn){
+      btn.classList.remove("armed");
+      if (btn.dataset.label) btn.textContent = btn.dataset.label;
+    }
+
+    function book(id, btn){
+      var tok = makeToken();
+      var body = {};
+      body["taken/" + id] = true;
+      body["keys/" + id] = tok;
+      btn.disabled = true;
+      fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) })
+        .then(function(r){
+          if (r.ok){
+            try { localStorage.setItem(tokenKey(id), tok); } catch(e){}
+            burstFrom(btn, 36);
+          }
+        })
+        .catch(function(){})
+        .then(function(){ btn.disabled = false; refresh(); });
+    }
+
+    function cancelBooking(id, btn){
+      var tok = myToken(id);
+      if (!tok) return refresh();
+      btn.disabled = true;
+      fetch(DB + "/keys/" + id + ".json", { method: "PUT", body: JSON.stringify("CANCEL:" + tok) })
+        .then(function(){
+          var body = {};
+          body["taken/" + id] = null;
+          body["keys/" + id] = null;
+          return fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) });
+        })
+        .catch(function(){})
+        .then(function(){
+          try { localStorage.removeItem(tokenKey(id)); } catch(e){}
+          btn.disabled = false;
+          refresh();
+        });
+    }
+
+    refresh();
+    setInterval(refresh, 25000);
+    document.addEventListener("visibilitychange", function(){
+      if (!document.hidden) refresh();
+    });
+  })();
 
   /* ── плавный скролл по якорю ── */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
