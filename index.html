@@ -700,7 +700,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         <span class="loot-state">свободен</span>
       </div>
     </div>
-    <p class="loot-note" id="bookNote">Бронь анонимная: нажал — и остальные сразу видят, что подарок занят. Передумаешь — кнопка «Снять бронь» останется на твоей карточке в этом браузере.</p>
+    <p class="loot-note" id="bookNote" aria-live="polite">Бронь анонимная: нажал — и остальные увидят, что подарок занят. Передумаешь — кнопка «Снять бронь» останется на твоей карточке в этом браузере.</p>
   </div>
 </section>
 
@@ -882,7 +882,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   var typeTarget = document.getElementById("typeTarget");
   var caret = document.getElementById("caret");
   var TITLE_HTML = 'Арине&nbsp;— <span class="num">18</span>';
-  var TITLE_PLAIN = "Арине — 18";
+  var TITLE_PLAIN = "Арине — 18";
   function startHero(instant){
     if (instant || reduced || !hasGsap){
       typeTarget.innerHTML = TITLE_HTML;
@@ -909,8 +909,8 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
 
   /* ── отсчёт до 8 ноября 2026, 12:00 — старт квеста, уровень 01: сбор.
      Полоса — путь от сегодняшнего дня ── */
-  var TARGET = new Date(2026, 10, 8, 12, 0, 0).getTime();
-  var ANNOUNCED = new Date(2026, 8, 23).getTime();
+  var TARGET = new Date("2026-11-08T12:00:00+03:00").getTime();
+  var ANNOUNCED = new Date("2026-09-23T00:00:00+03:00").getTime();
   var box = document.getElementById("cnt");
   var cells = { d: document.getElementById("cD"), h: document.getElementById("cH"),
                 m: document.getElementById("cM"), s: document.getElementById("cS") };
@@ -951,7 +951,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       a: ["Кислое", "Острое", "Сладкое"], ok: 1,
       why: "Хм, я действительно люблю всё это, но всё же выбираю острое. Моя семья очень любит подобное, поэтому это предпочтение передалось и мне." },
     { q: "Моя любимая порода собак",
-      a: ["Овчарки", "Шпиц", "Не люблю собак"], ok: 0,
+      a: ["Овчарки", "Шпиц", "Не люблю собак"], ok: 0,
       why: "Я с детства была окружена большими собаками, но овчарки — мои любимые. Немецкая, кавказская или австралийская — мечтаю завести хотя бы одну из них." },
     { q: "Мой любимый исполнитель",
       a: ["Алёна Швец", "Тони Раут", "Три дня дождя"], ok: 1,
@@ -964,7 +964,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     { min: 5, t: "Игрок её команды", p: "Ты знаешь Арину лучше всех. Ей будет приятно об этом узнать." },
     { min: 4, t: "Свой человек", p: "Один промах не считается: главное ты знаешь точно." },
     { min: 2, t: "Неплохой старт", p: "Значит, будет о чём поговорить на празднике." },
-    { min: 0, t: "Пора на совместный квест", p: "Тем интереснее: 8 ноября узнаешь её заново." }
+    { min: 0, t: "Пора на совместный квест", p: "Тем интереснее: 8 ноября узнаешь её заново." }
   ];
 
   var stage = document.getElementById("qStage");
@@ -984,10 +984,23 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
 
   function swapCard(build){
     var old = stage.querySelector(".q-card");
+    if (old) old.querySelectorAll("button").forEach(function(button){ button.disabled = true; });
     var next = build();
+    function focusCard(){
+      var heading = next.querySelector(".q-text") || next.querySelector(".q-num");
+      if (heading){
+        heading.tabIndex = -1;
+        heading.focus({ preventScroll: true });
+      }
+      if (next.getBoundingClientRect().top < 0){
+        next.scrollIntoView({ block: "start" });
+      }
+      if (hasGsap && window.ScrollTrigger) ScrollTrigger.refresh();
+    }
     if (reduced || !hasGsap){
       if (old) old.remove();
       stage.appendChild(next);
+      focusCard();
       return;
     }
     if (old){
@@ -997,7 +1010,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     }
     stage.appendChild(next);
     gsap.fromTo(next, { yPercent: 10, autoAlpha: 0 },
-      { yPercent: 0, autoAlpha: 1, duration: .4, ease: "power2.out", delay: old ? .14 : 0 });
+      { yPercent: 0, autoAlpha: 1, duration: .4, ease: "power2.out", delay: old ? .14 : 0, onComplete: focusCard });
   }
 
   function questionCard(i){
@@ -1017,7 +1030,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     var next = document.createElement("button");
     next.type = "button";
     next.className = "btn q-next hidden";
-    next.textContent = i + 1 < QUIZ.length ? "Дальше" : "К результату";
+    next.textContent = i + 1 < QUIZ.length ? "Дальше" : "К результату";
     next.addEventListener("click", nextStep);
     data.a.forEach(function(label, idx){
       var b = document.createElement("button");
@@ -1050,7 +1063,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     } else {
       btn.classList.add("wrong");
       star.classList.add("miss");
-      head = "Мимо. Верный ответ — «" + data.a[data.ok] + "»";
+      head = "Мимо. Верный ответ — «" + data.a[data.ok] + "»";
       why.classList.add("bad");
       if (!reduced && hasGsap) gsap.fromTo(btn, { x: 0 }, { x: 7, duration: .07, repeat: 5, yoyo: true, ease: "none", clearProps: "x" });
     }
@@ -1061,8 +1074,12 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     why.appendChild(b); why.appendChild(p);
     why.classList.add("show");
     next.classList.remove("hidden");
-    if (!reduced && hasGsap) gsap.from(why, { y: 10, autoAlpha: 0, duration: .35, ease: "power2.out" });
-    next.focus();
+    if (!reduced && hasGsap) gsap.from(why, { y: 10, opacity: 0, duration: .35, ease: "power2.out" });
+    why.tabIndex = -1;
+    why.focus({ preventScroll: true });
+    var whyTop = why.getBoundingClientRect().top;
+    if (whyTop < 0 || whyTop > innerHeight - 100) why.scrollIntoView({ block: "start" });
+    if (hasGsap && window.ScrollTrigger) ScrollTrigger.refresh();
   }
 
   function nextStep(){
@@ -1138,6 +1155,11 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     var note = document.getElementById("bookNote");
     var noteDefault = note ? note.innerHTML : "";
     var offline = false;
+    var pendingCancel = {};
+
+    function message(text){ if (note) note.textContent = text; }
+    function resetMessage(){ if (note) note.innerHTML = noteDefault; }
+    function checked(r){ if (!r.ok) throw new Error("booking-request-failed"); return r; }
 
     function tokenKey(id){ return "arina-gift-" + id; }
     function myToken(id){
@@ -1184,11 +1206,11 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         var st = card.querySelector(".loot-state");
         var taken = !!(data && data[id]);
         var mine = taken && !!myToken(id);
-        btn.classList.remove("armed");
+        disarm(btn);
         if (offline){
           btn.hidden = true;
           card.removeAttribute("data-taken");
-          if (st){ st.textContent = "свободен"; st.className = "loot-state"; }
+          if (st){ st.textContent = "статус недоступен"; st.className = "loot-state"; }
           return;
         }
         if (!taken){
@@ -1237,33 +1259,49 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         book(id, btn);
       }
     }
-    var armTimer = 0;
+    var armTimer = 0, armedButton = null;
     function arm(btn, text){
+      if (armedButton && armedButton !== btn) disarm(armedButton);
       btn.dataset.label = btn.textContent;
       btn.textContent = text;
       btn.classList.add("armed");
+      armedButton = btn;
       clearTimeout(armTimer);
       armTimer = setTimeout(function(){ disarm(btn); }, 4000);
     }
     function disarm(btn){
+      if (armedButton === btn){
+        clearTimeout(armTimer);
+        armedButton = null;
+      }
       btn.classList.remove("armed");
       if (btn.dataset.label) btn.textContent = btn.dataset.label;
+      delete btn.dataset.label;
     }
 
     function book(id, btn){
       var tok = makeToken();
+      try {
+        localStorage.setItem(tokenKey(id), tok);
+        if (myToken(id) !== tok) throw new Error("booking-storage-unavailable");
+      } catch(e){
+        message("Браузер не сохраняет ключ брони. Разреши сохранение данных или напиши Арине через кнопку ниже.");
+        return;
+      }
       var body = {};
       body["taken/" + id] = true;
       body["keys/" + id] = tok;
       btn.disabled = true;
       fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) })
         .then(function(r){
-          if (r.ok){
-            try { localStorage.setItem(tokenKey(id), tok); } catch(e){}
-            burstFrom(btn, 36);
+          if (!r.ok){
+            try { localStorage.removeItem(tokenKey(id)); } catch(e){}
+            throw new Error("booking-request-failed");
           }
+          resetMessage();
+          burstFrom(btn, 36);
         })
-        .catch(function(){})
+        .catch(function(){ message("Не удалось подтвердить бронь. Проверь статус подарка и попробуй ещё раз."); })
         .then(function(){ btn.disabled = false; refresh(); });
     }
 
@@ -1271,16 +1309,35 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       var tok = myToken(id);
       if (!tok) return refresh();
       btn.disabled = true;
-      fetch(DB + "/keys/" + id + ".json", { method: "PUT", body: JSON.stringify("CANCEL:" + tok) })
+      var pendingKey = tokenKey(id) + "-cancel";
+      var staged = pendingCancel[id] === tok;
+      try { staged = staged || localStorage.getItem(pendingKey) === tok; } catch(e){}
+      function release(){
+        var body = {};
+        body["taken/" + id] = null;
+        body["keys/" + id] = null;
+        return fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) }).then(checked);
+      }
+      function authorize(){
+        /* Сохраняем этап до запроса: ответ может потеряться уже после записи.
+           Повторная отмена сначала завершит начатую очистку. */
+        pendingCancel[id] = tok;
+        try { localStorage.setItem(pendingKey, tok); } catch(e){}
+        return fetch(DB + "/keys/" + id + ".json", { method: "PUT", body: JSON.stringify("CANCEL:" + tok) })
+          .then(checked).then(release);
+      }
+      var request = staged ? release().catch(authorize) : authorize();
+      request
         .then(function(){
-          var body = {};
-          body["taken/" + id] = null;
-          body["keys/" + id] = null;
-          return fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) });
+          try {
+            localStorage.removeItem(tokenKey(id));
+            localStorage.removeItem(pendingKey);
+          } catch(e){}
+          delete pendingCancel[id];
+          resetMessage();
         })
-        .catch(function(){})
+        .catch(function(){ message("Не удалось снять бронь. Она сохранена за тобой — попробуй ещё раз."); })
         .then(function(){
-          try { localStorage.removeItem(tokenKey(id)); } catch(e){}
           btn.disabled = false;
           refresh();
         });
@@ -1308,11 +1365,16 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     gsap.registerPlugin(ScrollTrigger);
     var mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", function(){
+      var focusCleanups = [];
       gsap.utils.toArray("main .reveal").forEach(function(el){
-        gsap.from(el, {
-          y: 28, autoAlpha: 0, duration: .6, ease: "power2.out",
+        var tween = gsap.from(el, {
+          y: 28, opacity: 0, duration: .6, ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 92%", once: true }
         });
+        /* Прозрачный блок остаётся доступен клавиатуре; фокус раскрывает его. */
+        function revealOnFocus(){ tween.progress(1); }
+        el.addEventListener("focusin", revealOnFocus);
+        focusCleanups.push(function(){ el.removeEventListener("focusin", revealOnFocus); });
       });
       gsap.utils.toArray("[data-level]").forEach(function(el){
         ScrollTrigger.create({
@@ -1320,7 +1382,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
           onEnter: function(){ el.classList.add("active"); }
         });
       });
-      return function(){};
+      return function(){ focusCleanups.forEach(function(cleanup){ cleanup(); }); };
     });
     mm.add("(prefers-reduced-motion: reduce)", function(){
       document.querySelectorAll("[data-level]").forEach(function(el){ el.classList.add("active"); });
