@@ -60,11 +60,13 @@ a{color:var(--amethyst)}
 
 .wrap{width:var(--col);margin-inline:auto}
 section{margin-block:72px;position:relative}
-p{max-width:33em;text-wrap:pretty}
+p{max-width:33em;text-wrap:pretty;overflow-wrap:anywhere}
+.level .addr,footer .pix,h3,.q-btn{overflow-wrap:anywhere}
 
 /* ── роли: Handjet — заголовки, Fira Code — ярлыки, Onest — текст и кнопки.
    Шкала кеглей: 14 / 17 / 21 / 26 / 40 / 64 (+96 на десктопе у героя) ── */
 h1,h2,.pix{font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;line-height:1;color:var(--text)}
+h1,h2{overflow-wrap:anywhere}
 h2{font-size:40px;letter-spacing:.02em;margin-bottom:12px;text-wrap:balance}
 h2 em{font-style:normal;color:var(--amethyst)}
 .kicker{
@@ -220,11 +222,12 @@ h2 em{font-style:normal;color:var(--amethyst)}
 @keyframes caret{50%{opacity:0}}
 .hero-line{margin:14px auto 0;color:var(--dim)}
 .hero-date{
-  margin:20px auto 0;display:inline-flex;align-items:center;gap:14px;
+  margin:20px auto 0;display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;
+  max-width:100%;
   font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:17px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--text);
   border:2px solid var(--line);background:var(--panel);
-  padding:12px 20px;white-space:nowrap;
+  padding:12px 20px;
 }
 .hero-date b{color:var(--gold);font-weight:600}
 .photo-slot{
@@ -253,13 +256,13 @@ h2 em{font-style:normal;color:var(--amethyst)}
 }
 
 /* ── отсчёт ── */
-.term{overflow:hidden}
+.term{overflow:hidden;container-type:inline-size}
 .term-bar{display:flex;gap:8px;margin:-28px -28px 22px;padding:12px 16px;align-items:center;background:#291549}
 .term-bar i{width:10px;height:10px;background:var(--line)}
 .term-bar i:first-child{background:var(--amethyst)}
 .term-bar span{margin-left:14px;font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.count{display:flex;gap:10px;justify-content:center;align-items:baseline}
-.cell{flex:0 1 110px;text-align:center}
+.count{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:baseline}
+.cell{flex:1 1 0;min-width:min-content;max-width:110px;text-align:center}
 .cell b{
   display:block;font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;
   font-size:64px;line-height:1;color:var(--amethyst);
@@ -277,6 +280,13 @@ h2 em{font-style:normal;color:var(--amethyst)}
   .count{gap:6px}
   .colon{display:none}
   .cell b{font-size:48px}
+}
+@container (max-width:15em){
+  .count{gap:16px 8px}
+  .cell{flex-basis:calc((100% - 8px)/2)}
+  /* Образец самой длинной подписи удерживает ширину при смене окончаний. */
+  .cell span::after{content:"секунды";display:block;height:0;visibility:hidden}
+  .colon{display:none}
 }
 .loadbar{margin:24px auto 0;max-width:420px;height:10px;border:2px solid var(--line);position:relative;overflow:hidden}
 .loadbar i{position:absolute;inset:0;transform-origin:left;background:linear-gradient(90deg,var(--violet),var(--amethyst));}
@@ -322,7 +332,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 @media (max-width:560px){
   .level{grid-template-columns:1fr;padding:20px 16px;gap:8px}
   .level p,.gift-rule p{hyphens:auto}
-  .level .n{position:absolute;right:14px;top:10px;font-size:40px}
+  .level .n{position:absolute;right:14px;top:10px;font-size:40px;width:2em;text-align:right}
 }
 
 /* ── викторина: вопросы и истории прислала сама Арина, 28.09.2026 ── */
@@ -383,13 +393,14 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .gift-rule{padding:18px 20px;margin-bottom:24px}
 @media (max-width:520px){.gift-rule{padding:16px 14px}}
 .gift-rule p{color:var(--dim);max-width:none}
-.loot{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:8px}
+.loot{--loot-gap:20px;display:flex;flex-wrap:wrap;gap:var(--loot-gap);margin-top:8px}
 .loot-card{
   position:relative;display:flex;flex-direction:column;gap:6px;
+  flex:1 1 calc((100% - var(--loot-gap))/2);min-width:auto;max-width:100%;
   border:2px solid var(--line);background:var(--panel);
   padding:18px 16px 16px;color:var(--text);
 }
-.loot-card b{font-weight:700;font-size:17px;line-height:1.3;padding-right:36px}
+.loot-card b{font-weight:700;font-size:17px;line-height:1.3;padding-right:max(2.2em,50px);min-width:0;overflow-wrap:anywhere}
 .loot-card b a{
   color:var(--text);text-decoration:underline;
   text-decoration-color:var(--line);text-underline-offset:3px;
@@ -405,6 +416,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 }
 .loot-state{
   margin-top:auto;align-self:flex-start;
+  max-width:100%;overflow-wrap:anywhere;
   font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;letter-spacing:.08em;
   color:var(--mint);border:2px solid rgba(92,224,184,.4);padding:3px 10px;
 }
@@ -413,6 +425,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .loot-book{
   position:relative;z-index:1;
   margin-top:10px;width:100%;font-weight:700;font-size:17px;color:#fff;
+  overflow-wrap:break-word;hyphens:auto;
   background:#5B39CC;border:2px solid #5B39CC;padding:11px 12px;cursor:pointer;
   transition:background .2s,border-color .2s,color .2s;
 }
@@ -424,21 +437,24 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .loot-state.st-mine{color:var(--gold);border-color:rgba(255,201,87,.45)}
 .loot-note{margin-top:22px;color:var(--dim)}
 @media (max-width:560px){
-  .loot{grid-template-columns:1fr 1fr;gap:14px}
-  .loot-card{padding:14px 12px 12px;min-width:0}
+  .loot{--loot-gap:14px}
+  .colon{display:none}
+  .loot-card{padding:14px 12px 12px}
   .loot-card b{hyphens:auto}
-  .loot-book{font-size:14px;padding:11px 6px}
+  .loot-book{font-size:14px;padding:11px 0}
   .loot-note{hyphens:auto}
 }
 /* на самых узких экранах два столбца не помещаются даже с переносами */
 @media (max-width:359px){
-  .loot{grid-template-columns:1fr}
+  .loot-card{flex-basis:100%}
 }
 
 /* ── скриншоты дня ── */
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+.shots{display:flex;flex-wrap:wrap;gap:20px;margin-top:8px}
+#photos{container-type:inline-size}
 .shot{
-  position:relative;aspect-ratio:4/5;border:2px dashed var(--line);background:
+  position:relative;flex:1 1 calc((100% - 40px)/3);min-width:min-content;max-width:100%;
+  aspect-ratio:4/5;border:2px dashed var(--line);background:
     repeating-linear-gradient(45deg, transparent 0 10px, rgba(167,139,255,.05) 10px 20px),
     var(--panel);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;text-align:center;
@@ -449,8 +465,12 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .shot svg{width:30px}
 .shot span{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;letter-spacing:.06em;color:var(--dim);line-height:1.6}
 @media (max-width:640px){
-  .shots{grid-template-columns:1fr 1fr}
-  .shot:nth-child(3){grid-column:1 / -1;width:52%;margin-inline:auto}
+  .shot{flex-basis:calc((100% - 20px)/2)}
+  .shot:nth-child(3){flex:0 1 52%;width:auto;margin-inline:auto}
+}
+@container (max-width:15em){
+  .shot{flex-basis:100%}
+  .shot:nth-child(3){flex-basis:100%;width:auto;margin-inline:0}
 }
 
 /* ── RSVP ── */
@@ -483,7 +503,10 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
 </style>
 </head>
 <body class="locked">
-<noscript><style>.envelope-screen{display:none}body.locked{overflow:auto}</style></noscript>
+<noscript>
+  <style>.envelope-screen,#countdown,#quiz,#bookNote,.loot-state,.rsvp .btns{display:none}body.locked{overflow:auto}.noscript-note{margin-block:24px}</style>
+  <p class="wrap noscript-note">Для викторины и онлайн-брони включи JavaScript. Подтвердить участие и обсудить подарок можно, <a href="https://vk.ru/klyavinaarina" target="_blank" rel="noopener">написав Арине</a>.</p>
+</noscript>
 
 <div class="dust" id="dust" aria-hidden="true"></div>
 
@@ -762,7 +785,8 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
 <script>
 (function(){
   "use strict";
-  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var motionQuery = matchMedia("(prefers-reduced-motion: reduce)");
+  var reduced = motionQuery.matches;
   var hasGsap = !!window.gsap;
 
   /* ── пиксель-звёзды фона ── */
@@ -780,14 +804,15 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   })();
 
   /* ── конфетти-пиксели ── */
-  var cv = document.getElementById("cfi"), ctx = cv.getContext("2d"), parts = [], raf = 0;
+  var cv = document.getElementById("cfi"), ctx = null, parts = [], raf = 0;
+  try { ctx = cv.getContext("2d"); } catch(e){}
   var COLORS = ["#A78BFF", "#FFC957", "#5CE0B8", "#F0ECFF", "#6D4AE0"];
   function sizeCanvas(){ cv.width = innerWidth; cv.height = innerHeight; }
   sizeCanvas();
   addEventListener("resize", sizeCanvas);
   var LIFE_MS = 2600;
   function burst(x, y, n){
-    if (reduced) return;
+    if (reduced || !ctx) return;
     for (var i = 0; i < n; i++){
       var sz = 4 + Math.random() * 6;
       parts.push({
@@ -883,6 +908,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   var caret = document.getElementById("caret");
   var TITLE_HTML = 'Арине&nbsp;— <span class="num">18</span>';
   var TITLE_PLAIN = "Арине — 18";
+  var typeTimer = 0, caretTimer = 0;
   function startHero(instant){
     if (instant || reduced || !hasGsap){
       typeTarget.innerHTML = TITLE_HTML;
@@ -891,13 +917,14 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     }
     typeTarget.textContent = "";
     var i = 0;
-    var t = setInterval(function(){
+    typeTimer = setInterval(function(){
       i++;
       typeTarget.textContent = TITLE_PLAIN.slice(0, i);
       if (i >= TITLE_PLAIN.length){
-        clearInterval(t);
+        clearInterval(typeTimer);
+        typeTimer = 0;
         typeTarget.innerHTML = TITLE_HTML;
-        setTimeout(function(){ caret.style.display = "none"; }, 1800);
+        caretTimer = setTimeout(function(){ caret.style.display = "none"; }, 1800);
       }
     }, 90);
     gsap.from(".hero-line, .hero-date, .photo-slot, .down", {
@@ -914,8 +941,12 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   var box = document.getElementById("cnt");
   var cells = { d: document.getElementById("cD"), h: document.getElementById("cH"),
                 m: document.getElementById("cM"), s: document.getElementById("cS") };
+  var timer = 0;
   function two(n){ return n < 10 ? "0" + n : "" + n; }
-  function setCell(el, val){
+  function setCell(el, val, forms){
+    var number = Number(val), lastTwo = number % 100, lastOne = number % 10;
+    var form = lastTwo >= 11 && lastTwo <= 14 ? 2 : lastOne === 1 ? 0 : lastOne >= 2 && lastOne <= 4 ? 1 : 2;
+    el.nextElementSibling.textContent = forms[form];
     if (el.textContent === val) return;
     el.textContent = val;
     if (!reduced && hasGsap) gsap.fromTo(el, { yPercent: -22, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .3, ease: "power2.out", overwrite: true });
@@ -925,20 +956,21 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     if (left <= 0){
       box.className = "count-done";
       box.textContent = "Квест уже начался!";
+      document.getElementById("loadFill").style.transform = "scaleX(1)";
       clearInterval(timer);
       return;
     }
     var s = Math.floor(left / 1000);
-    setCell(cells.d, "" + Math.floor(s / 86400));
-    setCell(cells.h, two(Math.floor(s % 86400 / 3600)));
-    setCell(cells.m, two(Math.floor(s % 3600 / 60)));
-    setCell(cells.s, two(s % 60));
+    setCell(cells.d, "" + Math.floor(s / 86400), ["день", "дня", "дней"]);
+    setCell(cells.h, two(Math.floor(s % 86400 / 3600)), ["час", "часа", "часов"]);
+    setCell(cells.m, two(Math.floor(s % 3600 / 60)), ["минута", "минуты", "минут"]);
+    setCell(cells.s, two(s % 60), ["секунда", "секунды", "секунд"]);
     var fill = document.getElementById("loadFill");
     var done = Math.min(1, Math.max(.04, (Date.now() - ANNOUNCED) / (TARGET - ANNOUNCED)));
     fill.style.transform = "scaleX(" + done.toFixed(4) + ")";
   }
   tick();
-  var timer = setInterval(tick, 1000);
+  if (Date.now() < TARGET) timer = setInterval(tick, 1000);
 
   /* ── викторина ──
      Вопросы, варианты и истории why — дословно от Арины (28.09.2026).
@@ -1150,203 +1182,563 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   /* ── живая бронь вишлиста: Firebase RTDB, анонимно ── */
   (function booking(){
     var DB = "https://arina18-default-rtdb.europe-west1.firebasedatabase.app";
+    var VK = "https://vk.ru/klyavinaarina";
+    var TIMEOUT = window.__ARINA_BOOKING_TIMEOUT__ || 8000;
     var cards = Array.prototype.slice.call(document.querySelectorAll(".loot-card[data-gift]"));
-    if (!cards.length || !window.fetch) return;
+    if (!cards.length) return;
+
     var note = document.getElementById("bookNote");
     var noteDefault = note ? note.innerHTML : "";
     var offline = false;
+    var last = {};
+    var refreshSeq = 0;
+    var mutationEpoch = 0;
+    var busy = {};
+    var proved = {};
+    var uncertain = {};
+    var invalidTokens = {};
     var pendingCancel = {};
+    var localQueues = {};
+    var armTimer = 0;
+    var armedButton = null;
 
-    function message(text){ if (note) note.textContent = text; }
+    function message(value){ if (note) note.textContent = value; }
+    function messageWithVK(value){
+      if (!note) return;
+      note.innerHTML = value + " <a href=\"" + VK + "\" target=\"_blank\" rel=\"noopener\">Напиши Арине</a>.";
+    }
     function resetMessage(){ if (note) note.innerHTML = noteDefault; }
-    function checked(r){ if (!r.ok) throw new Error("booking-request-failed"); return r; }
-
-    function tokenKey(id){ return "arina-gift-" + id; }
-    function myToken(id){
-      try { return localStorage.getItem(tokenKey(id)); } catch(e){ return null; }
-    }
-    function makeToken(){
-      var s = "";
-      try {
-        var a = new Uint8Array(16);
-        crypto.getRandomValues(a);
-        a.forEach(function(b){ s += (b < 16 ? "0" : "") + b.toString(16); });
-      } catch(e){
-        while (s.length < 32) s += Math.random().toString(16).slice(2);
-        s = s.slice(0, 32);
-      }
-      return s;
-    }
-
-    cards.forEach(function(card){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "loot-book";
-      b.hidden = true;
-      card.appendChild(b);
-      b.addEventListener("click", function(){ onClick(card, b); });
-    });
-
     function setOffline(on){
       if (on === offline) return;
       offline = on;
       if (!note) return;
       if (on){
         note.innerHTML = "Онлайн-бронь сейчас недоступна. Чтобы подарок закрепили за тобой, " +
-          "<a href=\"https://vk.ru/klyavinaarina\" target=\"_blank\" rel=\"noopener\">напиши Арине</a>.";
+          "<a href=\"" + VK + "\" target=\"_blank\" rel=\"noopener\">напиши Арине</a>.";
       } else {
-        note.innerHTML = noteDefault;
+        resetMessage();
       }
     }
 
+    function httpError(status){
+      var error = new Error("booking-request-failed");
+      error.status = status;
+      return error;
+    }
+    function checked(response){
+      if (!response.ok) throw httpError(response.status);
+      return response;
+    }
+    function denied(error){ return !!error && (error.status === 401 || error.status === 403); }
+    function request(url, options, parseJson){
+      return new Promise(function(resolve, reject){
+        var settled = false;
+        var controller = null;
+        var opts = options || {};
+        if (window.AbortController){
+          controller = new AbortController();
+          opts.signal = controller.signal;
+        }
+        var timer = setTimeout(function(){
+          if (settled) return;
+          settled = true;
+          if (controller) controller.abort();
+          reject(new Error("booking-request-timeout"));
+        }, TIMEOUT);
+        function finish(callback, value){
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          callback(value);
+        }
+        fetch(url, opts).then(function(response){
+          if (!parseJson) return finish(resolve, response);
+          if (!response.ok) return finish(reject, httpError(response.status));
+          response.json().then(function(data){
+            finish(resolve, data);
+          }, function(error){
+            finish(reject, error);
+          });
+        }, function(error){
+          finish(reject, error);
+        });
+      });
+    }
+    function readTaken(){
+      return request(DB + "/taken.json", { cache: "no-store" }, true)
+        .then(function(data){ return data || {}; });
+    }
+
+    function tokenKey(id){ return "arina-gift-" + id; }
+    function cancelKey(id){ return tokenKey(id) + "-cancel"; }
+    function validToken(value){ return typeof value === "string" && /^[0-9a-f]{32}$/.test(value); }
+    function readStorage(key){
+      try { return { ok: true, value: localStorage.getItem(key) }; }
+      catch(error){ return { ok: false, value: null }; }
+    }
+    function writeStorage(key, value){
+      try {
+        localStorage.setItem(key, value);
+        var check = readStorage(key);
+        return check.ok && check.value === value;
+      } catch(error){ return false; }
+    }
+    function invalidateStored(key, expected){
+      var before = readStorage(key);
+      if (before.ok && before.value !== expected) return;
+      try { localStorage.removeItem(key); } catch(error){}
+      var after = readStorage(key);
+      if (!after.ok || after.value === expected){
+        try { localStorage.setItem(key, ""); } catch(error){}
+      }
+    }
+    function myToken(id){
+      var result = readStorage(tokenKey(id));
+      if (!result.ok || !validToken(result.value) || invalidTokens[id] === result.value) return null;
+      return result.value;
+    }
+    function pendingToken(id){
+      var memory = pendingCancel[id];
+      if (validToken(memory)) return memory;
+      var result = readStorage(cancelKey(id));
+      return result.ok && validToken(result.value) ? result.value : null;
+    }
+    function storeToken(id, token){
+      if (!writeStorage(tokenKey(id), token)) throw new Error("booking-storage-unavailable");
+      delete invalidTokens[id];
+      return token;
+    }
+    function clearOwnerToken(id, token){
+      invalidTokens[id] = token;
+      invalidateStored(tokenKey(id), token);
+      if (proved[id] === token) delete proved[id];
+      if (uncertain[id] === token) delete uncertain[id];
+    }
+    function markPendingCancel(id, token){
+      pendingCancel[id] = token;
+      if (!writeStorage(cancelKey(id), token)) throw new Error("booking-storage-unavailable");
+    }
+    function clearPendingCancel(id, token){
+      if (pendingCancel[id] === token) delete pendingCancel[id];
+      invalidateStored(cancelKey(id), token);
+    }
+    function makeToken(){
+      var value = "";
+      try {
+        var bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        bytes.forEach(function(byte){ value += (byte < 16 ? "0" : "") + byte.toString(16); });
+      } catch(error){
+        while (value.length < 32) value += Math.random().toString(16).slice(2);
+        value = value.slice(0, 32);
+      }
+      return value;
+    }
+    function getOrCreateToken(id){
+      var existing = readStorage(tokenKey(id));
+      if (!existing.ok) throw new Error("booking-storage-unavailable");
+      if (validToken(existing.value) && invalidTokens[id] !== existing.value) return existing.value;
+      return storeToken(id, makeToken());
+    }
+
+    function disarm(button){
+      if (armedButton === button){
+        clearTimeout(armTimer);
+        armedButton = null;
+      }
+      button.classList.remove("armed");
+      if (button.dataset.label) button.textContent = button.dataset.label;
+      delete button.dataset.label;
+    }
+    function arm(button, label){
+      if (armedButton && armedButton !== button) disarm(armedButton);
+      button.dataset.label = button.textContent;
+      button.textContent = label;
+      button.classList.add("armed");
+      armedButton = button;
+      clearTimeout(armTimer);
+      armTimer = setTimeout(function(){ disarm(button); }, 4000);
+    }
+
+    function setState(state, text, className){
+      if (!state) return;
+      state.textContent = text;
+      state.className = "loot-state" + (className ? " " + className : "");
+    }
+    function render(card, mode){
+      var id = card.getAttribute("data-gift");
+      var button = card.querySelector(".loot-book");
+      var state = card.querySelector(".loot-state");
+      var sameMode = card.dataset.bookingMode === mode;
+      if (!sameMode) disarm(button);
+      card.dataset.bookingMode = mode;
+      button.disabled = false;
+      button.classList.remove("mine");
+
+      if (mode === "free"){
+        card.removeAttribute("data-taken");
+        setState(state, "свободен");
+        button.hidden = false;
+        if (!sameMode || !button.classList.contains("armed")) button.textContent = "Забронировать";
+      } else if (mode === "mine"){
+        card.removeAttribute("data-taken");
+        setState(state, "твоя бронь", "st-mine");
+        button.hidden = false;
+        button.classList.add("mine");
+        if (!sameMode || !button.classList.contains("armed")) button.textContent = "Снять бронь";
+      } else if (mode === "taken"){
+        card.setAttribute("data-taken", "");
+        setState(state, "занят", "st-taken");
+        button.hidden = true;
+      } else if (mode === "busy-book"){
+        card.removeAttribute("data-taken");
+        setState(state, "сохраняем бронь…", "st-mine");
+        button.hidden = true;
+        button.disabled = true;
+      } else if (mode === "busy-cancel"){
+        card.removeAttribute("data-taken");
+        setState(state, "снимаем бронь…", "st-mine");
+        button.hidden = true;
+        button.disabled = true;
+      } else if (mode === "uncertain"){
+        card.removeAttribute("data-taken");
+        setState(state, "статус не подтверждён");
+        button.hidden = true;
+      } else if (mode === "offline"){
+        card.removeAttribute("data-taken");
+        setState(state, "статус недоступен");
+        button.hidden = true;
+      } else {
+        card.removeAttribute("data-taken");
+        setState(state, "проверяем статус");
+        button.hidden = true;
+      }
+    }
     function apply(data){
       cards.forEach(function(card){
         var id = card.getAttribute("data-gift");
-        var btn = card.querySelector(".loot-book");
-        var st = card.querySelector(".loot-state");
+        if (busy[id]) return render(card, busy[id]);
+        if (offline) return render(card, "offline");
         var taken = !!(data && data[id]);
-        var mine = taken && !!myToken(id);
-        disarm(btn);
-        if (offline){
-          btn.hidden = true;
-          card.removeAttribute("data-taken");
-          if (st){ st.textContent = "статус недоступен"; st.className = "loot-state"; }
+        var token = myToken(id);
+        if (!taken) return render(card, "free");
+        if (token && proved[id] === token) return render(card, "mine");
+        if (token && uncertain[id] === token) return render(card, "uncertain");
+        if (token) return render(card, "checking");
+        render(card, "taken");
+      });
+    }
+    function mergeGift(id, taken){
+      if (taken) last[id] = true;
+      else delete last[id];
+    }
+
+    cards.forEach(function(card){
+      var id = card.getAttribute("data-gift");
+      var state = card.querySelector(".loot-state");
+      setState(state, "проверяем статус");
+      card.dataset.bookingMode = "checking";
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "loot-book";
+      button.hidden = true;
+      card.appendChild(button);
+      button.addEventListener("click", function(){ onClick(card, button); });
+    });
+
+    function anyBusy(){
+      return Object.keys(busy).length > 0;
+    }
+    function beginBusy(id, mode){
+      if (busy[id]) return false;
+      busy[id] = mode;
+      mutationEpoch++;
+      refreshSeq++;
+      apply(last);
+      return true;
+    }
+    function endBusy(id){
+      delete busy[id];
+      mutationEpoch++;
+      refreshSeq++;
+      apply(last);
+    }
+    function withGiftLock(id, task){
+      if (navigator.locks && typeof navigator.locks.request === "function"){
+        return navigator.locks.request("arina-booking-" + id, { mode: "exclusive" }, task);
+      }
+      var previous = localQueues[id] || Promise.resolve();
+      var run = previous.catch(function(){}).then(task);
+      var tail = run.then(function(){}, function(){});
+      localQueues[id] = tail;
+      return run.then(function(value){
+        if (localQueues[id] === tail) delete localQueues[id];
+        return value;
+      }, function(error){
+        if (localQueues[id] === tail) delete localQueues[id];
+        throw error;
+      });
+    }
+
+    function patchBooking(id, token){
+      var body = {};
+      body["taken/" + id] = true;
+      body["keys/" + id] = token;
+      return request(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) }).then(checked);
+    }
+    function proveToken(id, token){
+      return request(DB + "/keys/" + id + ".json", {
+        method: "PUT",
+        body: JSON.stringify(token)
+      }).then(checked);
+    }
+    function authorizeCancel(id, token){
+      return request(DB + "/keys/" + id + ".json", {
+        method: "PUT",
+        body: JSON.stringify("CANCEL:" + token)
+      }).then(checked);
+    }
+    function releaseGift(id){
+      var body = {};
+      body["taken/" + id] = null;
+      body["keys/" + id] = null;
+      return request(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) }).then(checked);
+    }
+    function readback(id){
+      return readTaken().then(function(data){
+        var taken = !!data[id];
+        mergeGift(id, taken);
+        return taken;
+      });
+    }
+
+    function proveOwnership(id, token){
+      if (!beginBusy(id, "busy-book")) return;
+      withGiftLock(id, function(){
+        return proveToken(id, token).then(function(){
+          storeToken(id, token);
+          proved[id] = token;
+          delete uncertain[id];
+          mergeGift(id, true);
+          resetMessage();
+        });
+      }).catch(function(error){
+        if (denied(error)){
+          clearOwnerToken(id, token);
+          mergeGift(id, true);
+        } else {
+          uncertain[id] = token;
+          messageWithVK("Не удалось подтвердить владельца брони. Проверь соединение и повтори позже.");
+        }
+      }).then(function(){ endBusy(id); });
+    }
+
+    function reconcile(data){
+      cards.forEach(function(card){
+        var id = card.getAttribute("data-gift");
+        if (busy[id]) return;
+        var pending = pendingToken(id);
+        if (pending){
+          if (data[id]) cancelBooking(id, card.querySelector(".loot-book"), true);
+          else {
+            clearOwnerToken(id, pending);
+            clearPendingCancel(id, pending);
+            mergeGift(id, false);
+            apply(last);
+          }
           return;
         }
-        if (!taken){
-          card.removeAttribute("data-taken");
-          if (st){ st.textContent = "свободен"; st.className = "loot-state"; }
-          btn.hidden = false;
-          btn.classList.remove("mine");
-          btn.textContent = "Забронировать";
-        } else if (mine){
-          card.removeAttribute("data-taken");
-          if (st){ st.textContent = "твоя бронь"; st.className = "loot-state st-mine"; }
-          btn.hidden = false;
-          btn.classList.add("mine");
-          btn.textContent = "Снять бронь";
-        } else {
-          card.setAttribute("data-taken", "");
-          if (st){ st.textContent = "занят"; st.className = "loot-state st-taken"; }
-          btn.hidden = true;
+        var token = myToken(id);
+        if (data[id] && token && proved[id] !== token){
+          proveOwnership(id, token);
         }
       });
     }
 
-    var last = null;
-    function refresh(){
-      return fetch(DB + "/taken.json", { cache: "no-store" })
-        .then(function(r){ if (!r.ok) throw 0; return r.json(); })
-        .then(function(d){ setOffline(false); last = d || {}; apply(last); })
-        .catch(function(){ setOffline(true); apply(last || {}); });
+    function refresh(force){
+      if (!force && anyBusy()) return Promise.resolve(null);
+      var seq = ++refreshSeq;
+      var epoch = mutationEpoch;
+      return readTaken().then(function(data){
+        if (seq !== refreshSeq || epoch !== mutationEpoch) return null;
+        setOffline(false);
+        last = data;
+        apply(last);
+        reconcile(last);
+        return data;
+      }).catch(function(){
+        if (seq !== refreshSeq || epoch !== mutationEpoch) return null;
+        setOffline(true);
+        apply(last);
+        return null;
+      });
     }
 
-    function onClick(card, btn){
-      var id = card.getAttribute("data-gift");
-      if (btn.classList.contains("mine")){
-        if (!btn.classList.contains("armed")){
-          arm(btn, "Точно снять бронь?");
-          return;
+    function resolveAmbiguousBook(id, token){
+      return readback(id).then(function(taken){
+        if (!taken){
+          uncertain[id] = token;
+          return false;
         }
-        disarm(btn);
-        cancelBooking(id, btn);
-      } else {
-        if (!btn.classList.contains("armed")){
-          arm(btn, "Точно бронируем?");
-          return;
-        }
-        disarm(btn);
-        book(id, btn);
-      }
-    }
-    var armTimer = 0, armedButton = null;
-    function arm(btn, text){
-      if (armedButton && armedButton !== btn) disarm(armedButton);
-      btn.dataset.label = btn.textContent;
-      btn.textContent = text;
-      btn.classList.add("armed");
-      armedButton = btn;
-      clearTimeout(armTimer);
-      armTimer = setTimeout(function(){ disarm(btn); }, 4000);
-    }
-    function disarm(btn){
-      if (armedButton === btn){
-        clearTimeout(armTimer);
-        armedButton = null;
-      }
-      btn.classList.remove("armed");
-      if (btn.dataset.label) btn.textContent = btn.dataset.label;
-      delete btn.dataset.label;
-    }
-
-    function book(id, btn){
-      var tok = makeToken();
-      try {
-        localStorage.setItem(tokenKey(id), tok);
-        if (myToken(id) !== tok) throw new Error("booking-storage-unavailable");
-      } catch(e){
-        message("Браузер не сохраняет ключ брони. Разреши сохранение данных или напиши Арине через кнопку ниже.");
-        return;
-      }
-      var body = {};
-      body["taken/" + id] = true;
-      body["keys/" + id] = tok;
-      btn.disabled = true;
-      fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) })
-        .then(function(r){
-          if (!r.ok){
-            try { localStorage.removeItem(tokenKey(id)); } catch(e){}
-            throw new Error("booking-request-failed");
+        return proveToken(id, token).then(function(){
+          storeToken(id, token);
+          proved[id] = token;
+          delete uncertain[id];
+          return true;
+        }, function(error){
+          if (denied(error)){
+            clearOwnerToken(id, token);
+            return false;
           }
-          resetMessage();
-          burstFrom(btn, 36);
-        })
-        .catch(function(){ message("Не удалось подтвердить бронь. Проверь статус подарка и попробуй ещё раз."); })
-        .then(function(){ btn.disabled = false; refresh(); });
-    }
-
-    function cancelBooking(id, btn){
-      var tok = myToken(id);
-      if (!tok) return refresh();
-      btn.disabled = true;
-      var pendingKey = tokenKey(id) + "-cancel";
-      var staged = pendingCancel[id] === tok;
-      try { staged = staged || localStorage.getItem(pendingKey) === tok; } catch(e){}
-      function release(){
-        var body = {};
-        body["taken/" + id] = null;
-        body["keys/" + id] = null;
-        return fetch(DB + "/.json", { method: "PATCH", body: JSON.stringify(body) }).then(checked);
-      }
-      function authorize(){
-        /* Сохраняем этап до запроса: ответ может потеряться уже после записи.
-           Повторная отмена сначала завершит начатую очистку. */
-        pendingCancel[id] = tok;
-        try { localStorage.setItem(pendingKey, tok); } catch(e){}
-        return fetch(DB + "/keys/" + id + ".json", { method: "PUT", body: JSON.stringify("CANCEL:" + tok) })
-          .then(checked).then(release);
-      }
-      var request = staged ? release().catch(authorize) : authorize();
-      request
-        .then(function(){
-          try {
-            localStorage.removeItem(tokenKey(id));
-            localStorage.removeItem(pendingKey);
-          } catch(e){}
-          delete pendingCancel[id];
-          resetMessage();
-        })
-        .catch(function(){ message("Не удалось снять бронь. Она сохранена за тобой — попробуй ещё раз."); })
-        .then(function(){
-          btn.disabled = false;
-          refresh();
+          uncertain[id] = token;
+          return false;
         });
+      }, function(){
+        uncertain[id] = token;
+        return false;
+      });
+    }
+    function book(id, button){
+      if (!beginBusy(id, "busy-book")) return;
+      var token = null;
+      var confirmed = false;
+      var conflict = false;
+      withGiftLock(id, function(){
+        token = getOrCreateToken(id);
+        return patchBooking(id, token).catch(function(error){
+          if (error.status) throw error;
+          return patchBooking(id, token);
+        }).then(function(){
+          storeToken(id, token);
+          proved[id] = token;
+          delete uncertain[id];
+          confirmed = true;
+          mergeGift(id, true);
+          return readback(id).catch(function(){ return true; });
+        }).catch(function(error){
+          if (denied(error)){
+            conflict = true;
+            clearOwnerToken(id, token);
+            return readback(id).catch(function(){ mergeGift(id, true); });
+          }
+          return resolveAmbiguousBook(id, token).then(function(owned){ confirmed = owned; });
+        });
+      }).then(function(){
+        if (confirmed){
+          resetMessage();
+        } else if (conflict){
+          message("Этот подарок уже успели забронировать.");
+        } else {
+          messageWithVK("Не удалось подтвердить бронь. Статус не определён — попробуй ещё раз.");
+        }
+      }).catch(function(error){
+        if (error && error.message === "booking-storage-unavailable"){
+          message("Браузер не сохраняет ключ брони. Разреши сохранение данных или напиши Арине через кнопку ниже.");
+        } else {
+          message("Не удалось подтвердить бронь. Проверь соединение и попробуй ещё раз.");
+        }
+      }).then(function(){
+        endBusy(id);
+        if (confirmed){ try { burstFrom(button, 36); } catch(error){} }
+      });
     }
 
-    refresh();
-    setInterval(refresh, 25000);
+    function cancelProtocol(id, token){
+      function once(){
+        return authorizeCancel(id, token).then(function(){ return releaseGift(id); });
+      }
+      return once().catch(function(error){
+        if (error.status) throw error;
+        return once();
+      });
+    }
+    function finalizeCancel(id, token){
+      clearOwnerToken(id, token);
+      clearPendingCancel(id, token);
+      mergeGift(id, false);
+      resetMessage();
+    }
+    function cancelBooking(id, button, resumed){
+      if (!beginBusy(id, "busy-cancel")) return;
+      var token = null;
+      var cancelled = false;
+      var conflict = false;
+      withGiftLock(id, function(){
+        token = pendingToken(id) || myToken(id);
+        if (!token) throw new Error("booking-storage-unavailable");
+        markPendingCancel(id, token);
+        return cancelProtocol(id, token).then(function(){
+          return readback(id).then(function(taken){
+            if (taken) throw new Error("booking-cancel-not-applied");
+            finalizeCancel(id, token);
+            cancelled = true;
+          }, function(){
+            finalizeCancel(id, token);
+            cancelled = true;
+          });
+        }).catch(function(error){
+          return readback(id).then(function(taken){
+            if (!taken){
+              finalizeCancel(id, token);
+              cancelled = true;
+              return;
+            }
+            if (denied(error)){
+              clearOwnerToken(id, token);
+              clearPendingCancel(id, token);
+              delete proved[id];
+              delete uncertain[id];
+              mergeGift(id, true);
+              conflict = true;
+              return;
+            }
+            throw error;
+          });
+        });
+      }).then(function(){
+        if (cancelled) return;
+        if (conflict){
+          message("Бронь уже изменилась в другом окне. Показан текущий статус подарка.");
+          return;
+        }
+        throw new Error("booking-cancel-not-applied");
+      }).catch(function(error){
+        if (error && error.message === "booking-storage-unavailable"){
+          message("Браузер не даёт прочитать ключ брони. Напиши Арине через кнопку ниже.");
+        } else {
+          if (proved[id] === token) delete proved[id];
+          uncertain[id] = token;
+          messageWithVK("Не удалось подтвердить отмену. Проверь статус и попробуй ещё раз.");
+        }
+      }).then(function(){
+        endBusy(id);
+        if (resumed && !cancelled) apply(last);
+      });
+    }
+
+    function onClick(card, button){
+      var id = card.getAttribute("data-gift");
+      if (busy[id]) return;
+      if (button.classList.contains("mine")){
+        if (!button.classList.contains("armed")) return arm(button, "Точно снять бронь?");
+        disarm(button);
+        cancelBooking(id, button, false);
+      } else {
+        if (!button.classList.contains("armed")) return arm(button, "Точно бронируем?");
+        disarm(button);
+        book(id, button);
+      }
+    }
+
+    if (!window.fetch){
+      setOffline(true);
+      apply(last);
+      return;
+    }
+    refresh(true);
+    setInterval(function(){ refresh(false); }, 25000);
     document.addEventListener("visibilitychange", function(){
-      if (!document.hidden) refresh();
+      if (!document.hidden) refresh(false);
     });
   })();
 
@@ -1372,7 +1764,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
           scrollTrigger: { trigger: el, start: "top 92%", once: true }
         });
         /* Прозрачный блок остаётся доступен клавиатуре; фокус раскрывает его. */
-        function revealOnFocus(){ tween.progress(1); }
+        function revealOnFocus(event){ if (event.target.matches(":focus-visible")) tween.progress(1); }
         el.addEventListener("focusin", revealOnFocus);
         focusCleanups.push(function(){ el.removeEventListener("focusin", revealOnFocus); });
       });
@@ -1391,6 +1783,26 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
   } else {
     document.querySelectorAll("[data-level]").forEach(function(el){ el.classList.add("active"); });
   }
+
+  function updateMotion(event){
+    reduced = event.matches;
+    if (!reduced) return;
+    parts.length = 0;
+    if (raf){ cancelAnimationFrame(raf); raf = 0; }
+    if (ctx) ctx.clearRect(0, 0, cv.width, cv.height);
+    if (typeTimer){
+      clearInterval(typeTimer);
+      typeTimer = 0;
+      typeTarget.innerHTML = TITLE_HTML;
+    }
+    clearTimeout(caretTimer);
+    if (caret) caret.style.display = "none";
+    if (hasGsap){
+      gsap.globalTimeline.getChildren(true, true, true).forEach(function(animation){ animation.totalProgress(1); });
+    }
+  }
+  if (motionQuery.addEventListener) motionQuery.addEventListener("change", updateMotion);
+  else if (motionQuery.addListener) motionQuery.addListener(updateMotion);
 
   /* автопроверки и file:// стартуют с открытой страницы — когда весь скрипт уже готов */
   if (autoOpen){
