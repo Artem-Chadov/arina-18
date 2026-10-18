@@ -592,7 +592,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
         <div>
           <time>13:00</time>
           <h3>Кибер Арена</h3>
-          <span class="addr">Рижский проспект, 70 · цокольный этаж · <a href="https://yandex.ru/maps/?text=Псков, Рижский проспект 70" target="_blank" rel="noopener">на карте</a></span>
+          <span class="addr">ул. Труда, 69 · <a href="https://yandex.ru/maps/?text=Псков, улица Труда 69" target="_blank" rel="noopener">на карте</a></span>
           <p>Главная локация дня — играем на больших экранах в командные катки с криками «за что!», а новичкам объясняем кнопки.</p>
           <span class="tag">точка дня</span>
         </div>
@@ -737,11 +737,11 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       <div id="aYes" class="hidden">
         <span class="pix">Ура, ждём тебя!</span>
         <span class="ans-note">Чтобы ответ засчитался, черкни Арине в личку.</span>
-        <a href="https://t.me/kyun_star_11" target="_blank" rel="noopener">Написать Арине</a>
+        <a href="https://vk.ru/klyavinaarina" target="_blank" rel="noopener">Написать Арине</a>
       </div>
       <div id="aNo" class="hidden">
         <span class="pix">Жаль, но всё понимаем</span>
-        <a href="https://t.me/kyun_star_11" target="_blank" rel="noopener">Напиши ей пару слов</a>
+        <a href="https://vk.ru/klyavinaarina" target="_blank" rel="noopener">Напиши ей пару слов</a>
       </div>
     </div>
   </div>
@@ -1092,18 +1092,18 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     note.textContent = t.p;
     var cta = document.createElement("div");
     cta.className = "quiz-cta";
-    var tg = document.createElement("a");
-    tg.className = "btn btn-main";
-    tg.href = "https://t.me/kyun_star_11";
-    tg.target = "_blank";
-    tg.rel = "noopener";
-    tg.textContent = "Похвастаться Арине";
+    var vk = document.createElement("a");
+    vk.className = "btn btn-main";
+    vk.href = "https://vk.ru/klyavinaarina";
+    vk.target = "_blank";
+    vk.rel = "noopener";
+    vk.textContent = "Похвастаться Арине";
     var again = document.createElement("button");
     again.className = "btn";
     again.type = "button";
     again.textContent = "Ещё раз";
     again.addEventListener("click", startQuiz);
-    cta.appendChild(tg); cta.appendChild(again);
+    cta.appendChild(vk); cta.appendChild(again);
     card.appendChild(head); card.appendChild(num); card.appendChild(title); card.appendChild(note); card.appendChild(cta);
     if (score >= 4) setTimeout(function(){ burst(innerWidth / 2, innerHeight * .45, 110); }, 350);
     return card;
@@ -1171,7 +1171,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
       if (!note) return;
       if (on){
         note.innerHTML = "Онлайн-бронь сейчас недоступна. Чтобы подарок закрепили за тобой, " +
-          "<a href=\"https://t.me/kyun_star_11\" target=\"_blank\" rel=\"noopener\">напиши Арине</a>.";
+          "<a href=\"https://vk.ru/klyavinaarina\" target=\"_blank\" rel=\"noopener\">напиши Арине</a>.";
       } else {
         note.innerHTML = noteDefault;
       }
