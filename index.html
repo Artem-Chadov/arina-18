@@ -400,7 +400,9 @@ h2 em{font-style:normal;color:var(--amethyst)}
   border:2px solid var(--line);background:var(--panel);
   padding:18px 16px 16px;color:var(--text);
 }
-.loot-card b{font-weight:700;font-size:17px;line-height:1.3;padding-right:max(2.2em,50px);min-width:0;overflow-wrap:anywhere}
+.loot-head{display:flex;gap:12px;align-items:flex-start}
+.loot-head b{flex:1}
+.loot-card b{font-weight:700;font-size:17px;line-height:1.3;min-width:0;overflow-wrap:anywhere}
 .loot-card b a{
   color:var(--text);text-decoration:underline;
   text-decoration-color:var(--line);text-underline-offset:3px;
@@ -411,7 +413,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
 .loot-card:has(b a:hover){border-color:var(--amethyst)}
 .loot-card i{font-style:normal;font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-size:14px;color:var(--dim)}
 .loot-n{
-  position:absolute;top:10px;right:12px;
+  order:1;position:static;flex:0 0 auto;transform:translate(4px,-8px);
   font-family:"Handjet","Handjet FB",sans-serif;font-weight:700;font-size:26px;line-height:1;color:#9C8AE0;
 }
 .loot-state{
@@ -441,6 +443,7 @@ h2 em{font-style:normal;color:var(--amethyst)}
   .colon{display:none}
   .loot-card{padding:14px 12px 12px}
   .loot-card b{hyphens:auto}
+  .loot-n{transform:translate(2px,-4px)}
   .loot-book{font-size:14px;padding:11px 0}
   .loot-note{hyphens:auto}
 }
@@ -675,50 +678,66 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     </div>
     <div class="loot">
       <div class="loot-card" data-gift="g1">
-        <span class="loot-n" aria-hidden="true">01</span>
-        <b><a href="https://ozon.ru/t/NsU630F" target="_blank" rel="noopener">Футболка Uniqlo</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">01</span>
+          <b><a href="https://ozon.ru/t/NsU630F" target="_blank" rel="noopener">Футболка Uniqlo</a></b>
+        </div>
         <i>размер L · Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g2">
-        <span class="loot-n" aria-hidden="true">02</span>
-        <b><a href="https://ozon.ru/t/UuoxY3H" target="_blank" rel="noopener">Набор масляных духов</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">02</span>
+          <b><a href="https://ozon.ru/t/UuoxY3H" target="_blank" rel="noopener">Набор масляных духов</a></b>
+        </div>
         <i>пробники, 100 мл · Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g3">
-        <span class="loot-n" aria-hidden="true">03</span>
-        <b><a href="https://ozon.ru/t/pHd1n2U" target="_blank" rel="noopener">Сумка кросс-боди YUWISS</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">03</span>
+          <b><a href="https://ozon.ru/t/pHd1n2U" target="_blank" rel="noopener">Сумка кросс-боди YUWISS</a></b>
+        </div>
         <i>Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g4">
-        <span class="loot-n" aria-hidden="true">04</span>
-        <b><a href="https://www.wildberries.ru/catalog/439234995/detail.aspx?size=622621730" target="_blank" rel="noopener">Синельная проволока</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">04</span>
+          <b><a href="https://www.wildberries.ru/catalog/439234995/detail.aspx?size=622621730" target="_blank" rel="noopener">Синельная проволока</a></b>
+        </div>
         <i>набор для творчества · WB</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g5">
-        <span class="loot-n" aria-hidden="true">05</span>
-        <b><a href="https://www.wildberries.ru/catalog/377456075/detail.aspx?size=549858811" target="_blank" rel="noopener">Сумка через плечо Spens</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">05</span>
+          <b><a href="https://www.wildberries.ru/catalog/377456075/detail.aspx?size=549858811" target="_blank" rel="noopener">Сумка через плечо Spens</a></b>
+        </div>
         <i>WB</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g6">
-        <span class="loot-n" aria-hidden="true">06</span>
-        <b><a href="https://www.wildberries.ru/catalog/298085407/detail.aspx?size=453300603" target="_blank" rel="noopener">Острые соевые снеки</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">06</span>
+          <b><a href="https://www.wildberries.ru/catalog/298085407/detail.aspx?size=453300603" target="_blank" rel="noopener">Острые соевые снеки</a></b>
+        </div>
         <i>10 пачек барбекю · WB</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g7">
-        <span class="loot-n" aria-hidden="true">07</span>
-        <b><a href="https://www.wildberries.ru/catalog/137214434/detail.aspx?size=233749095" target="_blank" rel="noopener">Вечерний корсет</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">07</span>
+          <b><a href="https://www.wildberries.ru/catalog/137214434/detail.aspx?size=233749095" target="_blank" rel="noopener">Вечерний корсет</a></b>
+        </div>
         <i>WB</i>
         <span class="loot-state">свободен</span>
       </div>
       <div class="loot-card" data-gift="g8">
-        <span class="loot-n" aria-hidden="true">08</span>
-        <b><a href="https://ozon.ru/t/9o2mBel" target="_blank" rel="noopener">Сумка кросс-боди</a></b>
+        <div class="loot-head">
+          <span class="loot-n" aria-hidden="true">08</span>
+          <b><a href="https://ozon.ru/t/9o2mBel" target="_blank" rel="noopener">Сумка кросс-боди</a></b>
+        </div>
         <i>Ozon</i>
         <span class="loot-state">свободен</span>
       </div>
