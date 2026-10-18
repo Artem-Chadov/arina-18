@@ -968,7 +968,7 @@ footer small{font-family:"Fira Code","Fira FB",monospace;font-weight:600;font-si
     el.nextElementSibling.textContent = forms[form];
     if (el.textContent === val) return;
     el.textContent = val;
-    if (!reduced && hasGsap) gsap.fromTo(el, { yPercent: -22, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .3, ease: "power2.out", overwrite: true });
+    if (!reduced && hasGsap) gsap.fromTo(el, { yPercent: -22 }, { yPercent: 0, duration: .3, ease: "power2.out", overwrite: true });
   }
   function tick(){
     var left = TARGET - Date.now();
